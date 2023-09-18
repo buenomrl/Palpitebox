@@ -4,6 +4,13 @@ import moment from 'moment/moment';
 
 const doc = new GoogleSpreadsheet('1w4n-ROqgYeNRFeQ7T4c0QS5nf8mSHycsKnR13mhKGZs');
 
+
+const genCupom = () => {
+    const code = parseInt(moment().format('YYMMDDHHmmssSSS')).toString(16).toUpperCase();
+    return code.substr(0,4) + '-' + code.substr(4,4) + '-' + code.substr(8,4);
+}
+
+
 export default async (req, res) => {
     try {
         await doc.useServiceAccountAuth(credentials);
@@ -24,7 +31,7 @@ export default async (req, res) => {
         
         if (mostrarPromocaoCell.value === 'VERDADEIRO') {
 
-            Cupom = 'Temporario';
+            Cupom = genCupom();
             Promo = textCell.value;
 
         }
@@ -35,10 +42,10 @@ export default async (req, res) => {
             Nome: data.Nome,
             Email: data.Email,
             Whatsapp: data.Whatsapp,
-            Nota: 5,
-            'Data Preenchimento': moment().format('MMMM Do YYYY, h:mm:ss a'),
+            'Data Preenchimento': moment().format('DD/MM/YYYY HH:mm:ss'),
             Cupom,
-            Promo
+            Promo,
+            Nota: 5
     
         })
         res.end(req.body);
