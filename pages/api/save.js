@@ -45,10 +45,14 @@ export default async (req, res) => {
             'Data Preenchimento': moment().format('DD/MM/YYYY HH:mm:ss'),
             Cupom,
             Promo,
-            Nota: 5
+            Nota: parseInt(data.Nota)
 
         })
-        res.end(req.body);
+        res.end(JSON.stringify({
+            showCoupon: Cupom !== '',
+            Cupom,
+            Promo
+        }));
 
     } catch (err) {
         console.log("Error: ", err.message);
