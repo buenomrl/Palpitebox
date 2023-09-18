@@ -7,7 +7,7 @@ const doc = new GoogleSpreadsheet('1w4n-ROqgYeNRFeQ7T4c0QS5nf8mSHycsKnR13mhKGZs'
 
 const genCupom = () => {
     const code = parseInt(moment().format('YYMMDDHHmmssSSS')).toString(16).toUpperCase();
-    return code.substr(0,4) + '-' + code.substr(4,4) + '-' + code.substr(8,4);
+    return code.substr(0, 4) + '-' + code.substr(4, 4) + '-' + code.substr(8, 4);
 }
 
 
@@ -16,19 +16,19 @@ export default async (req, res) => {
         await doc.useServiceAccountAuth(credentials);
         await doc.loadInfo();
         console.log(doc.title);
-    
+
         const sheet = doc.sheetsByIndex[1];
         const data = JSON.parse(req.body);
 
         const sheetConfig = doc.sheetsByIndex[2];
         await sheetConfig.loadCells('A2:B2');
-    
-        const mostrarPromocaoCell = sheetConfig.getCell(1,0);
-        const textCell = sheetConfig.getCell(1,1);
 
-        let Cupom ='';
-        let Promo ='';
-        
+        const mostrarPromocaoCell = sheetConfig.getCell(1, 0);
+        const textCell = sheetConfig.getCell(1, 1);
+
+        let Cupom = '';
+        let Promo = '';
+
         if (mostrarPromocaoCell.value === 'VERDADEIRO') {
 
             Cupom = genCupom();
@@ -37,7 +37,7 @@ export default async (req, res) => {
         }
 
         // Nome Email Whatsapp Cupom Promo
-    
+
         await sheet.addRow({
             Nome: data.Nome,
             Email: data.Email,
@@ -46,14 +46,14 @@ export default async (req, res) => {
             Cupom,
             Promo,
             Nota: 5
-    
+
         })
         res.end(req.body);
-    
-        } catch (err) {
-            console.log("Error: ", err.message);
-            res.end('error');
-        }
+
+    } catch (err) {
+        console.log("Error: ", err.message);
+        res.end('error');
+    }
 
 
 }
