@@ -17,7 +17,7 @@ const Index = () => {
 
             <div className='text-center my-12 container mx-auto px-4'>
                 <Link href='/pesquisa'>
-                    <p className='bg-blue-400 font-bold rounded-lg shadow-lg hover:shadow'>Dar opinião ou sugestão</p>
+                    <button className='bg-blue-400 font-bold rounded-lg shadow-lg hover:shadow p-6'>Dar opinião ou sugestão</button>
                 </Link>
             </div>
             {!data && <p>Carregando...</p>}
